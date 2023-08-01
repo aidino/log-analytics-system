@@ -45,3 +45,14 @@ output.kafka:
 pip install -r requirements.txt
 python apache-fake-log-gen.py -n 0 --sleep 1 | tee access-logs/access-logs_$(date +%s).log
 ```
+
+### Query data from cassandra
+
+```bash
+cqlsh 192.168.193.254 9042 -u cassandra -p cassandra
+```
+
+---
+Reference:
+- https://towardsdatascience.com/a-fast-look-at-spark-structured-streaming-kafka-f0ff64107325
+- 
