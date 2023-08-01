@@ -1,0 +1,50 @@
+version: "3.6"
+volumes:
+  shared-workspace:
+    name: "hadoop-distributed-file-system"
+    driver: local
+services:
+  cassandra:
+    image: 'bitnami/cassandra:latest'
+    hostname: CASSANDRA
+    ports:
+      - "9042:9042"
+    environment:
+      - "MAX_HEAP_SIZE=256M"
+      - "HEAP_NEWSIZE=128M"
+    container_name: cassandra
+    volumes:
+      - shared-workspace:/opt/cassandra/schema.cql
+
+  namenode:
+    image: bde2020/hadoop-namenode:1.1.0-hadoop2.8-java8
+    container_name: namenode
+    hostname: NAMENODE
+    volumes:
+    - shared-workspace:/opt/workspace/hadoop/dfs/name
+    environment:
+    - CLUSTER_NAME=test
+    - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    healthcheck:
+      interval: 5s
+      retries: 100
+    ports:
+    - 50070:50070
+    - 8020:8020
+
+  datanode:
+    image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
+    container_name: datanode
+    hostname: DATANODE
+    volumes:
+    - shared-workspace:/opt/workspace/hadoop/dfs/data
+    environment:
+    - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    depends_on:
+      - namenode
+    healthcheck:
+      interval: 5s
+      retries: 100
+    ports:
+     - 50075:50075
+     - 50010:50010
