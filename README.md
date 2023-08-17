@@ -56,3 +56,4 @@ cqlsh 192.168.193.254 9042 -u cassandra -p cassandra
 Reference:
 - https://towardsdatascience.com/a-fast-look-at-spark-structured-streaming-kafka-f0ff64107325
 - https://zenodo.org/record/8196385
+- https://github.com/big-data-europe/docker-hadoop/blob/master/docker-compose.yml
