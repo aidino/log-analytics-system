@@ -3,5 +3,5 @@ filebeat.inputs:
     paths:
       - /var/log/*.log
 output.kafka:
-  hosts: ["192.168.31.188:9092"] # Change this to your Kafka broker address
+  hosts: ["192.168.1.66:9092"] # Change this to your Kafka broker address
   topic: 'logs'
